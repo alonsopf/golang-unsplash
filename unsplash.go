@@ -77,6 +77,7 @@ type photoResponse struct {
 	} `json:"results"`
 }
 
+// Photos is the minimalist struct response of SearchPhotosByWord
 type Photos struct {
 	ID             string
 	URL            string
@@ -89,10 +90,13 @@ type Photos struct {
 
 var unsplashAcessKey string
 
+// SetUnsplashAcessKey is for auth, you can get it in https://unsplash.com/developers
 func SetUnsplashAcessKey(unsplashAcessKeyFromUser string) {
 	unsplashAcessKey = unsplashAcessKeyFromUser
 }
 
+// SearchPhotosByWord is the method for retrieve the data from the unsplash api
+// you can search by a single word
 func SearchPhotosByWord(word string, page, perPage int) (*[]*Photos, int, int, error) {
 	view := "https://api.unsplash.com/search/photos/?per_page=" + strconv.Itoa(perPage) + "&page=" + strconv.Itoa(page) + "&query=" + word + "&client_id=" + unsplashAcessKey
 	req, err := http.NewRequest("GET", view, nil)
