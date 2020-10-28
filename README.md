@@ -1,5 +1,5 @@
 # golang-unsplash
-a simple api wrapper for search photos by word
+a simple golang api wrapper for search photos by word, using the api of https://unsplash.com/
 
 # Usage
 ```golang
