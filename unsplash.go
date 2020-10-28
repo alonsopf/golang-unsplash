@@ -1,12 +1,13 @@
 package unsplash
+
 import (
-	"strconv"
 	"bytes"
 	"encoding/json"
 	"net/http"
+	"strconv"
 )
 
-type PhotoResponse struct {
+type photoResponse struct {
 	Total      int `json:"total"`
 	TotalPages int `json:"total_pages"`
 	Results    []struct {
@@ -77,35 +78,39 @@ type PhotoResponse struct {
 }
 
 type Photos struct {
-	ID string
-    Url string
-    Description string
-    AltDescription string
-    Likes string
-    Photographer string
-    Status string
+	ID             string
+	URL            string
+	Description    string
+	AltDescription string
+	Likes          string
+	Photographer   string
+	Status         string
 }
 
-var UNSPLASH_ACCESS_KEY string
+var unsplashAcessKey string
 
-func SearchPhotosByWord(word string, page, per_page int) (*[]*Photos, error, int , int) {
-	view := "https://api.unsplash.com/search/photos/?per_page="+strconv.Itoa(per_page)+"&page="+strconv.Itoa(page)+"&query="+word+"&client_id="+UNSPLASH_ACCESS_KEY
-	req, err := http.NewRequest("GET", view , nil)
+func SetUnsplashAcessKey(unsplashAcessKeyFromUser string) {
+	unsplashAcessKey = unsplashAcessKeyFromUser
+}
+
+func SearchPhotosByWord(word string, page, perPage int) (*[]*Photos, int, int, error) {
+	view := "https://api.unsplash.com/search/photos/?per_page=" + strconv.Itoa(perPage) + "&page=" + strconv.Itoa(page) + "&query=" + word + "&client_id=" + unsplashAcessKey
+	req, err := http.NewRequest("GET", view, nil)
 	if err != nil {
-		return nil, err, 0, 0
+		return nil, 0, 0, err
 	}
 	req.Header.Set("Content-Type", "application/json")
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
-		return nil, err, 0, 0
+		return nil, 0, 0, err
 	}
-	var result PhotoResponse
+	var result photoResponse
 	buf2 := new(bytes.Buffer)
 	buf2.ReadFrom(resp.Body)
 	defer resp.Body.Close()
 	s2 := buf2.String()
 	json.Unmarshal([]byte(s2), &result)
-	PhotosList := make([]*Photos,0)
+	PhotosList := make([]*Photos, 0)
 	var desc string
 	for _, photo := range result.Results {
 		desc = ""
@@ -113,6 +118,6 @@ func SearchPhotosByWord(word string, page, per_page int) (*[]*Photos, error, int
 			desc = photo.Description.(string)
 		}
 		PhotosList = append(PhotosList, &Photos{photo.ID, photo.Urls.Regular, desc, photo.AltDescription, strconv.Itoa(photo.Likes), photo.User.Name, "0"})
-    }
-	return &PhotosList, nil, result.Total, result.TotalPages
+	}
+	return &PhotosList, result.Total, result.TotalPages, nil
 }
