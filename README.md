@@ -1,2 +1,2 @@
-# just-testing
-for personal purposes only
+# golang-unsplash
+a simple api wrapper for search photos by word
