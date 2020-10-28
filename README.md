@@ -11,15 +11,15 @@ import (
 )
 
 func main() {
-    unsplash.UNSPLASH_ACCESS_KEY = "YOUR_KEY"
-    Photos, err, total, totalPages := unsplash.SearchPhotosByWord("medical",1,9)
+	unsplash.SetUnsplashAcessKey("gDiZdJTkd2JfA6W8dklxAUlPyGk1lSITxPlutej5eAA")
+	Photos, total, totalPages, err := unsplash.SearchPhotosByWord("medical",1,9)
     if err != nil {
     	fmt.Println(err)
     	return
     }
     fmt.Println(len(*Photos), total, totalPages)
     if len(*Photos) > 0 {
-    	fmt.Println((*Photos)[0].Url)	
+    	fmt.Println((*Photos)[0].URL)	
     }   
 }
 ```
