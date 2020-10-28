@@ -11,8 +11,8 @@ import (
 )
 
 func main() {
-	unsplash.SetUnsplashAcessKey("gDiZdJTkd2JfA6W8dklxAUlPyGk1lSITxPlutej5eAA")
-	Photos, total, totalPages, err := unsplash.SearchPhotosByWord("medical",1,9)
+    unsplash.SetUnsplashAcessKey("gDiZdJTkd2JfA6W8dklxAUlPyGk1lSITxPlutej5eAA")
+    Photos, total, totalPages, err := unsplash.SearchPhotosByWord("medical",1,9)
     if err != nil {
     	fmt.Println(err)
     	return
