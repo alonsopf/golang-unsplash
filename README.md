@@ -23,3 +23,10 @@ func main() {
     }   
 }
 ```
+# Example result
+
+```console
+foo@bar:~$ 
+9 1070 119
+https://images.unsplash.com/photo-1560582861-45078880e48e?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjE3MDg1MX0
+```
